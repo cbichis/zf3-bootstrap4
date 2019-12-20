@@ -145,14 +145,17 @@ class Menu extends ZendMenu
             $liClass = empty($liClasses) ? '' : ' class="' . $escaper(implode(' ', $liClasses)) . '"';
 
             if ($depth < $prevDepth) {
-                $html .= '       ' . $myIndent . '</div>' . PHP_EOL;
-
-                if ($depth === 0)
-                {
-                    $html .= '    ' . '</li>' . PHP_EOL;
-                }
+				for($i = $prevDepth; $i > $depth; $i--){
+					$html .= '       ' . $myIndent . '</div>' . PHP_EOL;
+				}
             }
 
+            if($depth <= $prevDepth){
+				if ($depth === 0) {
+					$html .= '    ' . '</li>' . PHP_EOL;
+				}
+			}
+            
             $html .= $myIndent
                 . ($depth === 0 ? '    <li' . $liClass . '>' : '')
                 . $myIndent . $this->htmlify($page, $escapeLabels, $depth > 0)
